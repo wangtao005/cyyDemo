@@ -1,0 +1,27 @@
+.editor-webkit{
+  .onToLoading {
+    ::v-deep.el-loading-mask{
+      z-index: 10000!important;
+    }
+    ::v-deep.w-e-text-container{
+      height: 500px!important;
+      max-height: 700px;
+      width: 100%
+    }
+    ::v-deep.video {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    .video iframe,
+    .video object,
+    .video embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

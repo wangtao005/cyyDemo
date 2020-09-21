@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+  <title>EasyEXP后台管理</title>
+
+  <link rel="stylesheet" href="../../dist/modules/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../dist/modules/ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="../../dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+
+  <link rel="stylesheet" href="../../dist/modules/summernote/summernote-lite.css">
+  <link rel="stylesheet" href="../../dist/modules/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="../../dist/css/demo.css">
+  <link rel="stylesheet" href="../../dist/css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+
+      <div class="main-content main-content-iframe">
+        <section class="section">
+			<h1 class="section-header">
+            <div>个人中心设置</div>
+          </h1>
+          <div class="section-body">
+          
+          <div class="card">
+                  <div class="card-header">
+                  </div>
+                  <div class="card-body p-0">
+                  	<input id="file" onchange="upload()" type="file" style="width:0px;height:0px;display:none">
+                  	<div class="col-sm-12">
+                  	<form id="infoForm">
+					  
+					  <div class="form-group row">
+					    <div class="col-sm-3" ></div>
+					    <label class="col-sm-1 col-form-label" for="headerUrl">头<span style="visibility: hidden;">占</span>像</label>
+					    <div class="col-sm-1">
+					    	<img src="../../dist/img/avatar/avatar-1.jpeg" id="headerImg" style="width:35px;height:35px" class="rounded mx-auto d-block" alt="头像">
+					    </div>
+					     <div class="col-sm-3">
+					    	<input type="text" class="form-control" readonly="readonly" name="headerUrl" id="headerUrl">
+					    </div>
+					    <div class="col-sm-1">
+					    	<button type="button" onclick='$("#file").trigger("click")' style="padding-top:5px;padding-bottom:5px"  class="btn btn-success">上传</button>
+					    </div>
+					    
+					    <div class="col-sm-3" ></div>
+					  </div>
+					  
+					  <div class="form-group row">
+					    <div class="col-sm-3" ></div>
+					    <label class="col-sm-1 col-form-label" for="account">账<span style="visibility: hidden;">占</span>号</label>
+					    <div class="col-sm-5">
+					    	<input type="text" class="form-control" readonly="readonly" name="account" id="account">
+					    </div>
+					    <div class="col-sm-3" ></div>
+					  </div>
+					  
+					   <div class="form-group row">
+					    <div class="col-sm-3" ></div>
+					    <label class="col-sm-1 col-form-label" for="nickName">昵<span style="visibility: hidden;">占</span>称</label>
+					    <div class="col-sm-5">
+					    	<input type="text" class="form-control" name="nickName" id="nickName">
+					    </div>
+					    <div class="col-sm-3" ></div>
+					  </div>
+					  
+					  <div class="form-group row">
+					    <div class="col-sm-3" ></div>
+					    <label class="col-sm-1 col-form-label" for="password1">旧密码</label>
+					    <div class="col-sm-5">
+					    	<input type="password" class="form-control" name="password1" id="password1">
+					    </div>
+					    <div class="col-sm-3" ></div>
+					  </div>
+					  
+					  <div class="form-group row">
+					    <div class="col-sm-3" ></div>
+					    <label class="col-sm-1 col-form-label" for="passowrd2">新密码</label>
+					    <div class="col-sm-5">
+					    	<input type="password" class="form-control" name="password2" id="passowrd2">
+					    </div>
+					    <div class="col-sm-3" ></div>
+					  </div>
+					  <div class="form-group row">
+					    <div class="col-sm-3" ></div>
+					    <label class="col-sm-1 col-form-label"></label>
+					    <div class="col-sm-5" style="text-align:center">
+					    	<button type="button" class="btn btn-primary" onclick="save()">保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					    	<button type="button" class="btn btn-secondary" onclick="reset()">重置</button>
+					    </div>
+					    <div class="col-sm-3" ></div>
+					  </div>
+					  
+					  
+					</form>
+                  	</div>
+                  </div>
+                  <div class="card-footer text-right" id="pagination">
+                    
+                  </div>
+                </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../../dist/modules/jquery.min.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../dist/modules/popper.js"></script>
+  <script src="../../dist/modules/tooltip.js"></script>
+  <script src="../../dist/modules/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../dist/modules/nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="../../dist/modules/scroll-up-bar/dist/scroll-up-bar.min.js"></script>
+  <script src="../../dist/js/sa-functions.js"></script>
+  
+
+  <script src="../../dist/js/scripts.js"></script>
+  <script src="../../dist/js/custom.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+	  getInfo();
+  	});
+  function getInfo(){
+	  $.ajax({
+	        url:rootPath+'/platform/user/getCurrentInfo',
+	        type:'get',
+	        data: "",
+	        dateType:"json",
+	        success:function(res){
+	           if(res&&res.code==200){
+	        	   $("#headerUrl").val(res.data.headerUrl);
+	        	   if(res.data.headerUrl&&res.data.headerUrl!="null"){
+	        	   		$("#headerImg").attr("src",res.data.headerUrl.indexOf("http://")>-1?res.data.headerUrl:(rootPath+"/"+res.data.headerUrl));
+	        	   }
+	        	   $("#account").val(res.data.account);
+	        	   $("#nickName").val(res.data.nickName);
+	           }else{
+	        	   alertBar("提示",res.desc);
+	           }
+	        },error:function(){
+	        	alertBar("提示","获取用户信息出错");
+	        }
+	    })
+  }
+  //上传
+  function upload(){
+	  var formData = new FormData();
+	    formData.append("file",$("#file")[0].files[0]);
+	    $.ajax({
+	        url:rootPath+'/file/fileUpload', /*接口域名地址*/
+	        type:'post',
+	        data: formData,
+	        contentType: false,
+	        processData: false,
+	        success:function(res){
+	           if(res&&res.path){
+	        	   $("#headerUrl").val(res.path);
+	        	   $("#headerImg").attr("src",res.path.indexOf("http://")>-1?res.path:(rootPath+"/"+res.path));
+	           }else{
+	        	   alertBar("提示","上传头像出错");
+	           }
+	        },
+	        error:function(){
+	        	alertBar("提示","上传头像出错");
+	        }
+	    })
+  }
+  function reset(){
+	  $("#infoForm")[0].reset();
+	  getInfo();
+  }
+  function save(){
+	  var formData = $("#infoForm").serializeJson();
+	  $.ajax({
+	        url:rootPath+'/platform/user/update', /*接口域名地址*/
+	        type:'post',
+	        contentType:"application/json",
+	        data: JSON.stringify(formData),
+	        success:function(res){
+	           if(res.code==200){
+	        	   alertBar("提示","修改数据成功",function(){
+	        		   //调用父页面的方法
+	        		   parent.loadInfo();
+	        	   });
+	        	   
+	           }else{
+	        	   alertBar("提示",res.desc);
+	           }
+	        },
+	        error:function(){
+	        	alertBar("提示","修改数据出错");
+	        }
+	    })
+  }
+  </script>
+</body>
+</html>

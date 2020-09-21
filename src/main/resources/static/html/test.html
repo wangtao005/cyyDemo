@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+</head>
+<body>
+
+<!--<form action="/file/fileUpload" class="layui-form form form-horizontal" id="form-patient-add"  enctype="multipart/form-data" method="post">-->
+<!--<div class="layui-form-item">-->
+<!--<label class="layui-form-label"><span class="x-red">*</span>模拟视频：</label>-->
+<!--<input type="file" name="file" id="file"/>-->
+<!--</div>-->
+<!--<button class="layui-btn" id="subbtn" type="submit">-->
+<!--提交-->
+<!--</button>-->
+<!--</form>-->
+
+<a  href="/my/data/single/listDate?ids=344088279206854656,343796893211426816">
+    提交
+</a>
+<script>
+    function test() {
+        $.ajax({
+            type: "POST",
+            url: "/my/data/single/listDate",
+            data: {ids:"343796893211426816"},
+            success: function (data) {
+
+            }
+        });
+    }
+</script>
+</body>
+</html>

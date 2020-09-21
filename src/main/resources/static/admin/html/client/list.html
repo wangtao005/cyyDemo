@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+  <title>EasyEXP后台管理</title>
+
+  <link rel="stylesheet" href="../../dist/modules/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../dist/modules/ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="../../dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+
+  <link rel="stylesheet" href="../../dist/modules/summernote/summernote-lite.css">
+  <link rel="stylesheet" href="../../dist/modules/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="../../dist/css/demo.css">
+  <link rel="stylesheet" href="../../dist/css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+
+      <div class="main-content main-content-iframe">
+        <section class="section">
+			<h1 class="section-header">
+            <div>用户管理</div>
+          </h1>
+          <div class="section-body">
+          
+          <div class="card">
+                  <div class="card-header">
+                    <form id="searchForm" class="form-inline">
+					  <div class="form-group">
+					    <label for="key">关键词</label>
+					    <input type="text" id="key" class="form-control mx-sm-4" placeholder="账号、姓名、联系电话">
+					    <button type="button" onclick="query()" class="btn btn-primary">查找 <span class="icon ion-ios-search-strong"></span></button>&nbsp;&nbsp;
+					    <button type="button" onclick="searchReset()" class="btn btn-primary">重置 <span class="icon ion-ios-loop-strong"></span></button>
+					  </div>
+					</form>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table id="table" class="table table-hover dataTable table-striped" style="min-height:100px">
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card-footer text-right" id="pagination">
+                    
+                  </div>
+                </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../../dist/modules/jquery.min.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../dist/modules/popper.js"></script>
+  <script src="../../dist/modules/tooltip.js"></script>
+  <script src="../../dist/modules/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../dist/modules/nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="../../dist/modules/scroll-up-bar/dist/scroll-up-bar.min.js"></script>
+  <script src="../../dist/js/sa-functions.js"></script>
+  
+
+  <script src="../../dist/js/scripts.js"></script>
+  <script src="../../dist/js/custom.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+	  query();
+  	});
+  function query(){
+	  var key = $("#key").val();
+	  tableBar({
+    	  id:"table",
+    	  column:[{field:"account",columnName:"账号"},{field:"name",columnName:"姓名"},{field:"phone",columnName:"联系电话"},{field:"status",columnName:"状态"},{field:"createDate",columnName:"创建时间"},{field:"lastLoginTime",columnName:"最后登录时间"}],
+    	  url:rootPath+"/platform/client/getListByPage",
+    	  param:{key:$.trim(key)},
+    	  serial:true,
+    	  pageBar:"pagination",
+      }
+      );
+  }
+  function searchReset(){
+	  $("#searchForm")[0].reset();
+	  query();
+  }
+  </script>
+</body>
+</html>

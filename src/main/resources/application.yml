@@ -1,0 +1,31 @@
+server:
+  port: 9999
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  profiles:
+    active: local
+    include: cyy
+  application:
+      name: easyexp
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+  thymeleaf:
+    cache: false
+    prefix: classpath:/static/
+    suffix: .html
+    encoding: UTF-8
+    mode: html
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

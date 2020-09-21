@@ -1,0 +1,42 @@
+#no-feedback{
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  .centent-webkit{
+    margin: 0 auto;
+    width: 900px;
+    .form-centent-webkit{
+      width: 100%;
+      padding: 10px;
+      // border: 1px solid #adadad;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .home-table-webkit{
+      border: 1px solid #adadad;
+      border-radius: 5px;
+      padding: 0 10px 10px 10px;
+      .ont-tabs-webkit{
+
+      }
+      .table-type-class{
+        .table-header th {
+          background-color: red!important;
+        }
+      }
+    }
+  }
+  .dialog-webkit{
+    z-index: 10;
+    // v-deep:
+    .el-dialog__wrapper{
+
+      ::v-deep.el-dialog__footer{
+        display: none;
+      }
+    }
+    .v-modal{
+
+    }
+  }
+}

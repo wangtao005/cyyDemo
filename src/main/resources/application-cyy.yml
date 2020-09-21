@@ -1,0 +1,62 @@
+cyy:
+  componet:
+    cache:
+      type: redis
+    token:
+      jwt:
+        secret: 123456
+        iss: mics.site
+        payload-exp: 100
+        #开启token加密#
+        wrapperSwitch: false
+        #加密/解密时的key，开始token加密时有效，请勿随意更改！更改后一定要测试！(TokenUtil一起更改)
+        wrapperKey: ijhy1876gbs0978n
+        #开始请求时间校验，开启前提需要开启token加密，否则将出现异常
+        verifyTime: false
+        #请求有效时间，单位：毫秒，开启请求时间校验时有效
+        requestDurationMiles: 60000
+        #是否允许重复登录
+        duplicate: false
+        #默认通用验证码
+        defaultToken: default@token
+        #token缓存时间 2天 (秒)
+        tokenCacheTime: 172800
+
+  plugin:
+    sms:
+      type: alibaba
+      alibaba:
+        region-id: cn-hangzhou
+        access-key-id: LTAI4G77Dsf46QgsRt7k3Jcs
+        access-key-secret:  6m2cuysanJS92gIwo5BhgBxyDiMgSW
+        sign-name: 通感科技云实验
+        logInCode: SMS_201650475
+        registeredCode: SMS_201650475
+        retrievePasswordCode: SMS_201650475
+        modifyPasswordCode: SMS_201650475
+        ordinaryCode: SMS_201650475
+      verification-code:
+        minDuration: 60000
+        maxCountPerPhone: 5
+        smsLength: 6
+        validDuration: 300000
+      linkai:
+        lk_url: 1
+        corp_id: 1
+        pass_wd: 1
+    pay:
+      type: weixin
+      weixin:
+        mch_id: 1602688865 
+        app_id: wxa90361f10a25d837
+        key: sichuantonggankeji12345678900000
+        notify_url: http://171.217.93.53:9999/order/payCallBack
+        http_connect_timeout_ms: 2000
+        http_read_timeout_ms: 2000
+        should_auto_report: false
+        report_worker_num: 10
+        report_queue_max_size: 10000
+        report_batch_size: 10
+        wxPayDomain:
+          domain: api.mch.weixin.qq.com
+          primary_domain: true

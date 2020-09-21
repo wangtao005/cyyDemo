@@ -1,0 +1,11 @@
+#start-instruction{
+  border: 1px solid #adadad;
+  border-radius: 5px;
+  ::v-deep.el-form-item__label{
+    font-size: 16px;
+    font-weight: inherit;
+    color: #000;
+    text-align: left;
+    text-indent: 10px;
+  }
+}

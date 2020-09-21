@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+  <title>EasyEXP后台管理</title>
+
+  <link rel="stylesheet" href="../../dist/modules/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../dist/modules/ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="../../dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+
+  <link rel="stylesheet" href="../../dist/modules/summernote/summernote-lite.css">
+  <link rel="stylesheet" href="../../dist/modules/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="../../dist/css/demo.css">
+  <link rel="stylesheet" href="../../dist/css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+
+      <div class="main-content main-content-iframe">
+        <section class="section">
+			<h1 class="section-header">
+            <div>会员级别设置</div>
+          </h1>
+          <div class="section-body">
+          
+          <div class="card">
+                  <div class="card-header">
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table id="table" class="table table-hover dataTable table-striped" style="min-height:100px">
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card-footer text-right" id="pagination">
+                    
+                  </div>
+                </div>
+          </div>
+        </section>
+        <!-- 弹出框 -->
+        
+		<div class="modal fade" id="exampleModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">会员级别参数修改</h5>
+		        <button type="button" onclick="closeModel()" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <form id="form">
+		        	<input type="hidden" value="" id="level" name="level">
+		          <div class="form-group row">
+				    <label for="level" class="col-sm-3 col-form-label">级别名:</label>
+				    <div class="col-sm-9">
+				      <input type="text"  class="form-control" name="levelName" id="levelName" value="">
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="duration" class="col-sm-3 col-form-label">时长(天):</label>
+				    <div class="col-sm-9">
+				      <input type="text" name="duration" pattern="\d{1,10}" maxlength="10" pattern="^\d{1,10}$" placeholder="请输入正整数"  class="form-control" required="required" id="duration">
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="amount" class="col-sm-3 col-form-label">金额(元):</label>
+				    <div class="col-sm-9">
+				      <input type="text" name="amount" maxlength="10" class="form-control" required="required" id="amount">
+				    </div>
+				  </div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" onclick="closeModel()" data-dismiss="modal">关闭</button>
+		        <button type="button" onclick="save()" class="btn btn-primary">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+      </div>
+
+    </div>
+  </div>
+  
+
+  <script src="../../dist/modules/jquery.min.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../dist/modules/popper.js"></script>
+  <script src="../../dist/modules/tooltip.js"></script>
+  <script src="../../dist/modules/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../dist/modules/nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="../../dist/modules/scroll-up-bar/dist/scroll-up-bar.min.js"></script>
+  <script src="../../dist/js/sa-functions.js"></script>
+  
+
+  <script src="../../dist/js/scripts.js"></script>
+  <script src="../../dist/js/custom.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+	  query();
+  	});
+  function query(){
+	  tableBar({
+    	  id:"table",
+    	  column:[{field:"levelName",columnName:"级别名"},{field:"level",columnName:"级别标识"},{field:"duration",columnName:"时长(天)"},{field:"amount",columnName:"金额(元)"},{columnName:"操作",renderer:actionRenderer}],
+    	  url:rootPath+"/platform/vipLevel/getList",
+    	  method:"get",
+    	  serial:true
+      }
+      );
+  }
+  //操作
+  function actionRenderer(e){
+	  return "<a style='color:blue' href='javascript:void(0)' onclick='update("+e.level+")'>修改</a>";
+  }
+  function update(level){
+	  $.ajax({
+	        url: rootPath+"/platform/vipLevel/getInfo",
+	        type: "get", 
+	        data: "level="+level, 
+	        success: function (data) {
+	        	if(data.code==200){
+	        		$("#levelName").val(data.data.levelName);
+	        		$("#level").val(data.data.level);
+	        		$("#duration").val(data.data.duration);
+	        		$("#amount").val(data.data.amount);
+	        		$('#exampleModel').modal({'show':true,'keyboard':false,'backdrop':false});	
+	        	}else{
+	        		alertBar("提示",data.desc);
+	        	}
+	        	
+	        },error:function(){
+	        	alertBar("提示","加载数据失败");
+	        }
+	    });
+	 
+  }
+  function closeModel(){
+	  $('#exampleModel').modal("hide");
+  }
+  function save(){
+	  var form = $("#form");
+	  if (form[0].checkValidity() === false) {
+		  form.addClass('was-validated');
+		  return;
+	  }else{
+		  form.removeClass('was-validated');
+	  }
+	  var formData = {};
+	  var t = $('#form').serializeArray();
+	  $.each(t, function() {
+	      formData[this.name] = this.value;
+	  });
+	  $.ajax({
+	        url: rootPath+"/platform/vipLevel/update",
+	        type: "POST", 
+	        contentType:"application/json",
+	        data: JSON.stringify(formData),
+	        success: function (data) {
+	        	closeModel();
+	        	if(data.code==200){
+	        		alertBar("提示",data.desc,function(){
+	        			query();
+	        		});
+	        	}else{
+	        		alertBar("提示",data.desc,function(){
+	        			$('#exampleModel').modal("show")
+	        		});
+	        	}
+	        	
+	        },error:function(){
+	        	alertBar("提示","加载数据失败",function(){
+        			$('#exampleModel').modal("show")
+        		});
+	        }
+	    });
+	  
+  }
+  </script>
+</body>
+</html>

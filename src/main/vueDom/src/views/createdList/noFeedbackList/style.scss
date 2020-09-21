@@ -1,0 +1,6 @@
+#no-feedback-list{
+  height: 100%;
+  .el-table{
+    height: calc(100vh - 184px)!important;
+  }
+}
